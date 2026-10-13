@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syntraxs Hospital</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="nav">
+      <div class="brand">
+        <div class="logo">✚</div>
+        <div>syntraxs <span>hospital</span></div>
+      </div>
+
+      <nav class="navlinks">
+        <button class="active" data-nav="home">Home</button>
+        <button data-nav="departments">Departments</button>
+        <button data-nav="doctors">Our Doctors</button>
+        <button data-nav="appointments">Appointments</button>
+        <button data-nav="billing">Billing</button>
+      </nav>
+
+      <button class="primary" onclick="go('appointments')">
+        Book appointment ↗
+      </button>
+    </header>
+
+    <main id="homePage">
+      <section class="hero">
+        <div>
+          <div class="eyebrow">Care that moves you forward</div>
+          <h1>Better care.<br><em>Brighter futures.</em></h1>
+          <p>
+            Expert specialists, thoughtful care, and advanced medicine —
+            all connected in one place.
+          </p>
+          <div class="heroactions">
+            <button class="primary" onclick="go('departments')">
+              Explore departments →
+            </button>
+            <button class="secondary" onclick="go('doctors')">
+              Meet our specialists
+            </button>
+          </div>
+          <div class="metrics">
+            <div class="metric"><strong>24</strong><small>Departments</small></div>
+            <div class="metric"><strong>72</strong><small>Sample doctor profiles</small></div>
+            <div class="metric"><strong>24/7</strong><small>Emergency support concept</small></div>
+          </div>
+        </div>
+        <div class="heroart">
+          <div class="orb"><div class="cross">✚</div></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sectionhead">
+          <div>
+            <div class="eyebrow">Care for every need</div>
+            <h2>Explore our departments</h2>
+          </div>
+          <button class="secondary" onclick="go('departments')">View all →</button>
+        </div>
+        <div class="deptgrid" id="homeDepts"></div>
+      </section>
+
+      <section class="section">
+        <div class="sectionhead">
+          <div>
+            <div class="eyebrow">People behind your care</div>
+            <h2>Meet our specialists</h2>
+          </div>
+          <button class="secondary" onclick="go('doctors')">All doctors →</button>
+        </div>
+        <div class="doctors" id="homeDoctors"></div>
+      </section>
+
+      <section class="section">
+        <div class="panel">
+          <h2>Appointments made simple</h2>
+          <p>Book a consultation and review your saved appointments.</p>
+          <button class="primary" onclick="go('appointments')">
+            Book or check appointments →
+          </button>
+        </div>
+      </section>
+
+      <section class="banner">
+        <div>
+          <h2>Your health shouldn't have to wait.</h2>
+          <p>Review your sample bill and try the demo checkout.</p>
+        </div>
+        <button class="secondary" onclick="go('billing')">Open billing →</button>
+      </section>
+    </main>
+
+    <main id="directoryPage" class="section hide">
+      <div class="sectionhead">
+        <div>
+          <div class="eyebrow">Find your care team</div>
+          <h2 id="directoryTitle">Departments & specialists</h2>
+        </div>
+      </div>
+
+      <div class="searchbar">
+        <input id="searchInput" placeholder="Search doctors or departments..."
+               oninput="renderDirectory()">
+        <select id="deptFilter" onchange="renderDirectory()">
+          <option value="all">All departments</option>
+        </select>
+        <select id="sortFilter" onchange="renderDirectory()">
+          <option value="name">Sort by name</option>
+          <option value="fee">Sort by fee</option>
+          <option value="experience">Sort by experience</option>
+        </select>
+      </div>
+
+      <div class="deptgrid" id="allDepts"></div>
+      <h2>Available doctors</h2>
+      <div class="doctors" id="allDoctors"></div>
+    </main>
+
+    <main id="profilePage" class="page hide">
+      <button class="back" onclick="go('doctors')">← Back to doctors</button>
+      <div id="profileContent"></div>
+    </main>
+
+    <main id="appointmentsPage" class="page hide">
+      <button class="back" onclick="go('home')">← Back to home</button>
+      <h1>Book & check appointments</h1>
+
+      <div class="billlayout">
+        <section class="panel">
+          <h2>Book an appointment</h2>
+
+          <div class="field">
+            <label>Patient name</label>
+            <input id="appointmentPatient" placeholder="Your full name">
+          </div>
+
+          <div class="field">
+            <label>Department</label>
+            <select id="appointmentDept" onchange="updateAppointmentDoctors()"></select>
+          </div>
+
+          <div class="field">
+            <label>Doctor</label>
+            <select id="appointmentDoctor"></select>
+          </div>
+
+          <div class="field">
+            <label>Date</label>
+            <input id="appointmentDate" type="date">
+          </div>
+
+          <div class="field">
+            <label>Preferred time</label>
+            <select id="appointmentTime">
+              <option>09:00 AM</option>
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>12:00 PM</option>
+              <option>02:00 PM</option>
+              <option>03:00 PM</option>
+              <option>04:00 PM</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Visit type</label>
+            <select id="appointmentVisit">
+              <option>In-person consultation</option>
+              <option>Video consultation (demo)</option>
+              <option>Follow-up visit</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Reason for visit</label>
+            <textarea id="appointmentReason" rows="3"></textarea>
+          </div>
+
+          <button class="primary" onclick="saveAppointment()">
+            Confirm appointment
+          </button>
+        </section>
+
+        <section class="panel">
+          <h2>My appointments</h2>
+          <button class="secondary" onclick="renderAppointments()">Refresh</button>
+          <div id="appointmentList"></div>
+        </section>
+      </div>
+    </main>
+
+    <main id="billingPage" class="page hide">
+      <button class="back" onclick="go('home')">← Back to home</button>
+      <h1>Hospital billing</h1>
+
+      <div class="billlayout">
+        <section class="panel">
+          <div class="field">
+            <label>Patient name</label>
+            <input id="patientName" placeholder="Full name">
+          </div>
+
+          <div class="field">
+            <label>Patient ID (optional)</label>
+            <input id="patientId" placeholder="SYN-10482">
+          </div>
+
+          <div class="field">
+            <label>Service</label>
+            <select id="billService" onchange="updateBill()">
+              <option value="consult">Doctor consultation</option>
+              <option value="lab">Laboratory tests</option>
+              <option value="scan">Imaging / scan</option>
+              <option value="room">Room / admission</option>
+              <option value="pharmacy">Pharmacy / medicines</option>
+              <option value="custom">Other service</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Doctor</label>
+            <select id="billDoctor">
+              <option value="">Select doctor</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Additional charges (₹)</label>
+            <input id="extraCharge" type="number" min="0" value="0"
+                   oninput="updateBill()">
+          </div>
+
+          <div class="field">
+            <label>Payment method</label>
+            <select id="payMethod">
+              <option>UPI (demo)</option>
+              <option>Credit / debit card (demo)</option>
+              <option>Net banking (demo)</option>
+              <option>Pay at hospital</option>
+            </select>
+          </div>
+
+          <p class="notice">
+            Demo checkout only. No real payment is collected.
+          </p>
+        </section>
+
+        <section class="panel">
+          <h2>Bill summary</h2>
+          <div class="billrow"><span>Service charge</span><strong id="servicePrice"></strong></div>
+          <div class="billrow"><span>Facility fee</span><strong id="facilityPrice"></strong></div>
+          <div class="billrow"><span>Additional charges</span><strong id="extraPrice"></strong></div>
+          <div class="billrow"><span>Tax (sample 5%)</span><strong id="taxPrice"></strong></div>
+          <div class="billrow"><span>Total payable</span><strong class="total" id="totalPrice"></strong></div>
+          <button class="primary" onclick="payBill()">Complete demo payment →</button>
+        </section>
+      </div>
+    </main>
+
+    <main id="receiptPage" class="page hide">
+      <section class="panel center">
+        <h1>Thank you!</h1>
+        <p>Your demo receipt is ready. No real transaction has taken place.</p>
+        <div id="receiptDetails"></div>
+        <button class="primary" onclick="go('home')">Return to home →</button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      Syntraxs Hospital · Care, connected. People, first.
+      <span>Demo website</span>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
