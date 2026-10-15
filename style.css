@@ -1,4 +1,50 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap');
+
+/* Body text */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Headings and brand */
+h1, h2, h3, h4, h5, h6,
+.brand, .metric strong, .total {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Navigation, buttons, and labels */
+.eyebrow, .role, .count, .tag, .navlinks,
+button, input, select, textarea, label {
+  font-family: 'Manrope', sans-serif;
+}
+
+/* Paragraphs and descriptive text */
+p, .bio, .smallmuted, .notice,
+.infoitem small, .dept p, .footer {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Heading spacing */
+.hero h1,
+.sectionhead h2,
+.profilehead h1 {
+  font-weight: 700;
+  letter-spacing: -1.2px;
+}
+
+/* Improve paragraph readability */
+.hero p, .sectionhead p {
+  font-size: 17px;
+  line-height: 1.8;
+  letter-spacing: 0.1px;
+}
+
+.doctor-body p,
+.panel p,
+.bookbox p {
+  line-height: 1.8;
+}
+
 :root {
   color-scheme: dark;
   --bg: #070b14;
