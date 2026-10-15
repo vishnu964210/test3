@@ -45,6 +45,7 @@ p, .bio, .smallmuted, .notice,
   line-height: 1.8;
 }
 
+
 /* Doctor directory columns: 4 on wide screens, responsive on smaller screens. */
 .doctors {
   display: grid;
